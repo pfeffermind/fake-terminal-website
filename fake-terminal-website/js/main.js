@@ -12,10 +12,11 @@ var configs = (function () {
     }
   };
   Singleton.defaultOptions = {
-    bruteForceAttack: "0x00 - 0xff Progression: [1-99%] Estimated process duration ~ [3: 30min]",
+    bruteForceAttack: "?b = 0x00 - 0xff Progression : [1-99%] Geschätzte Prozessdauer ~ [3:30min]",
+    KillPID: "Die Prozess ID 1840 wurde erfolgreich beendet.",
     welcome: "This is the welcome message",
     internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
-    invalid_command_message: "<value>: command not found.",
+    invalid_command_message: "command not found.",
     sudo_message: "Unable to sudo using a web client.",
     usage: "Usage",
     file: "file",
@@ -76,7 +77,8 @@ var main = (function () {
   InvalidArgumentException.prototype.constructor = InvalidArgumentException;
 
   var cmds = {
-    BFA: { value: "brute force attack", help: configs.getInstance().bruteForceAttack },
+    BFA: { value: "brute force attack"},
+    KILLPID: { value: "sudo kill process pid 1840"},
     LS: { value: "ls", help: configs.getInstance().ls_help },
     CAT: { value: "cat", help: configs.getInstance().cat_help },
     WHOAMI: { value: "whoami", help: configs.getInstance().whoami_help },
@@ -126,24 +128,10 @@ var main = (function () {
       if (event.which === 13 || event.keyCode === 13) {
         this.handleCmd();
         ignoreEvent(event);
-      } else if (event.which === 9 || event.keyCode === 9) {
-        this.handleFill();
-        ignoreEvent(event);
       }
     }.bind(this));
     this.reset();
   };
-
-  Terminal.makeElementDisappear = function (element) {
-    element.style.opacity = 0;
-    element.style.transform = "translateX(-300px)";
-  };
-
-  Terminal.makeElementAppear = function (element) {
-    element.style.opacity = 1;
-    element.style.transform = "translateX(0)";
-  };
-
 
   Terminal.prototype.lock = function () {
     this.exec();
@@ -158,46 +146,6 @@ var main = (function () {
     this.focus();
   };
 
-  Terminal.prototype.handleFill = function () {
-    var cmdComponents = this.cmdLine.value.trim();
-    console.log(cmdComponents);
-    // if ((cmdComponents.length <= 1) || (cmdComponents.length === 2 && cmdComponents[0] === cmds.CAT.value)) {
-    //   this.lock();
-    //   var possibilities = [];
-    //   if (cmdComponents[0].toLowerCase() === cmds.CAT.value) {
-    //     if (cmdComponents.length === 1) {
-    //       cmdComponents[1] = "";
-    //     }
-    //     if (configs.getInstance().welcome_file_name.startsWith(cmdComponents[1].toLowerCase())) {
-    //       possibilities.push(cmds.CAT.value + " " + configs.getInstance().welcome_file_name);
-    //     }
-    //     for (var file in files.getInstance()) {
-    //       if (file.startsWith(cmdComponents[1].toLowerCase())) {
-    //         possibilities.push(cmds.CAT.value + " " + file);
-    //       }
-    //     }
-    //   } else {
-    //     for (var command in cmds) {
-    //       if (cmds[command].value.startsWith(cmdComponents[0].toLowerCase())) {
-    //         possibilities.push(cmds[command].value);
-    //       }
-    //     }
-    //   }
-    //   if (possibilities.length === 1) {
-    //     this.cmdLine.value = possibilities[0] + " ";
-    //     this.unlock();
-    //   } else if (possibilities.length > 1) {
-    //     this.type(possibilities.join("\n"), function () {
-    //       this.cmdLine.value = cmdComponents.join(" ");
-    //       this.unlock();
-    //     }.bind(this));
-    //   } else {
-    //     this.cmdLine.value = cmdComponents.join(" ");
-    //     this.unlock();
-    //   }
-    // }
-  };
-
   Terminal.prototype.handleCmd = function () {
     var cmdComponents = this.cmdLine.value.trim().toLowerCase();
     this.lock();
@@ -205,36 +153,8 @@ var main = (function () {
       case cmds.BFA.value:
       this.bruteForceAttack();
       break;
-      case cmds.CAT.value:
-      this.cat(cmdComponents);
-      break;
-      case cmds.LS.value:
-      this.ls();
-      break;
-      case cmds.WHOAMI.value:
-      this.whoami();
-      break;
-      case cmds.DATE.value:
-      this.date();
-      break;
-      case cmds.HELP.value:
-      this.help();
-      break;
-      case cmds.CLEAR.value:
-      this.clear();
-      break;
-      case cmds.REBOOT.value:
-      this.reboot();
-      break;
-      case cmds.CD.value:
-      case cmds.MV.value:
-      case cmds.RMDIR.value:
-      case cmds.RM.value:
-      case cmds.TOUCH.value:
-      this.permissionDenied(cmdComponents);
-      break;
-      case cmds.SUDO.value:
-      this.sudo();
+      case cmds.KILLPID.value:
+      this.KillPID();
       break;
       default:
       this.invalidCommand(cmdComponents);
@@ -259,13 +179,43 @@ var main = (function () {
     this.type(configs.getInstance().sudo_message, this.unlock.bind(this));
   }
 
-  Terminal.prototype.bruteForceAttack = function (cmdComponents) {
+  Terminal.prototype.bruteForceAttack = async function (cmdComponents) {
     var result = configs.getInstance().bruteForceAttack;
+    var parent = this;
+    var percentage = 0;
+
     this.type(result, this.unlock.bind(this));
+    var execLine = document.getElementById("input-line");
+    execLine.classList.toggle("hidden");
+
+    await sleep(1100);
+
+    while(percentage != 100){
+      console.log(bruteText);
+      var bruteText = "[";
+      for(var i = 0; i < 100; i++){
+        if(i <= percentage){
+          bruteText += "#";
+        } else {
+          bruteText += "_";
+        }
+      }
+      bruteText += "] " + percentage + "% \n";
+      console.log(bruteText);
+
+      this.type(bruteText);
+      await sleep(2100);
+      percentage++;
+    }
+    this.type("Brute force attack completed");
+    execLine.classList.toggle("hidden");
+    document.getElementById("cmdline").focus();
   };
 
-  Terminal.prototype.date = function (cmdComponents) {
-    this.type(new Date().toString(), this.unlock.bind(this));
+
+  Terminal.prototype.KillPID = function (cmdComponents) {
+    var result = configs.getInstance().KillPID;
+    this.type(result, this.unlock.bind(this));
   };
 
   Terminal.prototype.clear = function () {
@@ -317,13 +267,15 @@ var main = (function () {
     if (isURL(text)) {
       window.open(text);
     }
+
     var i = 0;
     var output = this.output;
-    var timer = this.timer;
+    var timer = this.timer/2;
     var skipped = false;
     var skip = function () {
       skipped = true;
     }.bind(this);
+
     document.addEventListener("dblclick", skip);
     (function typer() {
       if (i < text.length) {
