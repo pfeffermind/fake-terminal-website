@@ -14,16 +14,7 @@ var configs = (function () {
   Singleton.defaultOptions = {
     bruteForceAttack: "?b = 0x00 - 0xff Progression : [1-99%] Geschätzte Prozessdauer ~ [3:30min]",
     KillPID: "Die Prozess ID 1840 wurde erfolgreich beendet.",
-    welcome: "Session..........: Mothra v 1.5.1112 
-    Status...........: Running
-    Hash.Type........: bcrypt $2*$, Blowfish (Unix)
-    Hash.Target......: 192.168.2.1
-    Guess.Base.......: File 
-    Speed.#1.........:    20152 H/s (5.13ms) @ Accel:8 Loops:2 Thr:8 Vec:1
-    Restore.Point....: 379904/14344385
-    Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:22-24
-    Candidates.#1....: 03232005 -> xoxo94
-    Hardware.Mon.#1..: Temp: 54c Fan:  4% Util: 98% Core:1949MHz Mem:5005MHz Bus:16",
+    welcome: "Session..........: Mothra v 1.5.1112 \nStatus...........: Running \nHash.Type........: bcrypt $2*$, Blowfish (Unix) \nHash.Target......: 192.168.2.1 \nGuess.Base.......: File \nRestore.Point....: 379904/14344385 \nRestore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:22-24 \nCandidates.#1....: 03232005 -> xoxo94 \nardware.Mon.#1..: Temp: 54c Fan:  4% Util: 98% Core:1949MHz Mem:5005MHz Bus:16",
     internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
     invalid_command_message: "command not found.",
     sudo_message: "Unable to sudo using a web client.",
