@@ -190,24 +190,24 @@ var main = (function () {
 
     await sleep(1100);
 
-    while(percentage <= 10){
+    while(percentage != 100){
       console.log(bruteText);
       var bruteText = "[";
-      for(var i = 1; i <= 10; i++){
+      for(var i = 0; i < 100; i++){
         if(i <= percentage){
-          bruteText += "##";
+          bruteText += "#";
         } else {
-          bruteText += "__";
+          bruteText += "_";
         }
       }
-      bruteText += "] " + percentage + "0% \n";
+      bruteText += "] " + percentage + "% \n";
       console.log(bruteText);
 
       this.type(bruteText);
-      await sleep(21000);
+      await sleep(2100);
       percentage++;
     }
-    this.type("Brute force attack completed\n");
+    this.type("Brute force attack completed");
     execLine.classList.toggle("hidden");
     document.getElementById("cmdline").focus();
     sendRoomEvent("bruteForceAttack");

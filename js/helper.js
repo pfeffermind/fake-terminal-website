@@ -1,7 +1,8 @@
 function sendRoomEvent(roomEvent) {
   console.log(roomEvent);
+  var hitnpadIp = "";
 
-  wrongAnswerImg.visible = true;
+  // wrongAnswerImg.visible = true;
 
   var data = JSON.stringify( {"data":{"content": roomEvent, "origin":"MyEscapeRoomDevice"}} );
   var xhr  = new XMLHttpRequest();
