@@ -204,7 +204,9 @@ var main = (function () {
       console.log(bruteText);
 
       this.type(bruteText);
-      await sleep(2100);
+      if(percentage < 10){
+        await sleep(2100);
+      }
       percentage++;
     }
     this.type("Brute force attack completed");
