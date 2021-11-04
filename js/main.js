@@ -14,6 +14,7 @@ var configs = (function () {
   Singleton.defaultOptions = {
     bruteForceAttack: "?b = 0x00 - 0xff Progression : [1-99%] Geschätzte Prozessdauer ~ [3:30min]",
     KillPID: "Die Prozess ID 1840 wurde erfolgreich beendet.",
+    help: "Bitte kontaktieren sie Ihren zuständigen Systemadministrator.",
     welcome: "Session..........: Mothra v 1.5.1112 \nStatus...........: Running \nHash.Type........: bcrypt $2*$, Blowfish (Unix) \nHash.Target......: 192.168.2.1 \nGuess.Base.......: File \nRestore.Point....: 379904/14344385 \nRestore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:22-24 \nCandidates.#1....: 03232005 -> xoxo94 \nardware.Mon.#1..: Temp: 54c Fan:  4% Util: 98% Core:1949MHz Mem:5005MHz Bus:16",
     internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
     invalid_command_message: "command not found.",
@@ -79,6 +80,7 @@ var main = (function () {
   var cmds = {
     BFA: { value: "brute force attack"},
     KILLPID: { value: "sudo kill process pid 1840"},
+    HELP: { value: "help"},
     LS: { value: "ls", help: configs.getInstance().ls_help },
     CAT: { value: "cat", help: configs.getInstance().cat_help },
     WHOAMI: { value: "whoami", help: configs.getInstance().whoami_help },
@@ -156,6 +158,9 @@ var main = (function () {
       case cmds.KILLPID.value:
       this.KillPID();
       break;
+      case cmds.HELP.value:
+      this.help();
+      break;
       default:
       this.invalidCommand(cmdComponents);
       break;
@@ -222,6 +227,11 @@ var main = (function () {
     var result = configs.getInstance().KillPID;
     this.type(result, this.unlock.bind(this));
     sendRoomEvent("killPID");
+  };
+
+  Terminal.prototype.help = function (cmdComponents) {
+    var result = configs.getInstance().help;
+    this.type(result, this.unlock.bind(this));
   };
 
   Terminal.prototype.clear = function () {
