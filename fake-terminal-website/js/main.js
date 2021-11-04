@@ -204,7 +204,7 @@ var main = (function () {
       console.log(bruteText);
 
       this.type(bruteText);
-      await sleep(2100);
+      await sleep(21000);
       percentage++;
     }
     this.type("Brute force attack completed");
