@@ -205,7 +205,9 @@ var main = (function () {
 
       this.type(bruteText);
       if(percentage < 10){
-        await sleep(2100);
+        await sleep(21000);
+      } else {
+        await sleep(1400);
       }
       percentage++;
     }
