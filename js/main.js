@@ -81,19 +81,6 @@ var main = (function () {
     BFA: { value: "brute force attack"},
     KILLPID: { value: "sudo kill process pid 1840"},
     HELP: { value: "help"},
-    LS: { value: "ls", help: configs.getInstance().ls_help },
-    CAT: { value: "cat", help: configs.getInstance().cat_help },
-    WHOAMI: { value: "whoami", help: configs.getInstance().whoami_help },
-    DATE: { value: "date", help: configs.getInstance().date_help },
-    HELP: { value: "help", help: configs.getInstance().help_help },
-    CLEAR: { value: "clear", help: configs.getInstance().clear_help },
-    REBOOT: { value: "reboot", help: configs.getInstance().reboot_help },
-    CD: { value: "cd", help: configs.getInstance().cd_help },
-    MV: { value: "mv", help: configs.getInstance().mv_help },
-    RM: { value: "rm", help: configs.getInstance().rm_help },
-    RMDIR: { value: "rmdir", help: configs.getInstance().rmdir_help },
-    TOUCH: { value: "touch", help: configs.getInstance().touch_help },
-    SUDO: { value: "sudo", help: configs.getInstance().sudo_help }
   };
 
   var Terminal = function (prompt, cmdLine, output, user, host, root, outputTimer) {
@@ -167,23 +154,6 @@ var main = (function () {
     };
   };
 
-  Terminal.prototype.cat = function (cmdComponents) {
-    var result;
-    if (cmdComponents.length <= 1) {
-      result = configs.getInstance().usage + ": " + cmds.CAT.value + " <" + configs.getInstance().file + ">";
-    } else if (!cmdComponents[1] || (!cmdComponents[1] === configs.getInstance().welcome_file_name || !files.getInstance().hasOwnProperty(cmdComponents[1]))) {
-      result = configs.getInstance().file_not_found.replace(configs.getInstance().value_token, cmdComponents[1]);
-    } else {
-      result = cmdComponents[1] === configs.getInstance().welcome_file_name ? configs.getInstance().welcome : files.getInstance()[cmdComponents[1]];
-    }
-    this.type(result, this.unlock.bind(this));
-  };
-
-
-  Terminal.prototype.sudo = function () {
-    this.type(configs.getInstance().sudo_message, this.unlock.bind(this));
-  }
-
   Terminal.prototype.bruteForceAttack = async function (cmdComponents) {
     var result = configs.getInstance().bruteForceAttack;
     var parent = this;
@@ -210,7 +180,7 @@ var main = (function () {
 
       this.type(bruteText);
       if(percentage < 10){
-        await sleep(21000);
+        await sleep(2100);
       } else {
         await sleep(1400);
       }
@@ -232,17 +202,6 @@ var main = (function () {
   Terminal.prototype.help = function (cmdComponents) {
     var result = configs.getInstance().help;
     this.type(result, this.unlock.bind(this));
-  };
-
-  Terminal.prototype.clear = function () {
-    this.output.textContent = "";
-    this.prompt.textContent = "";
-    this.prompt.textContent = this.completePrompt;
-    this.unlock();
-  };
-
-  Terminal.prototype.reboot = function () {
-    this.type(configs.getInstance().reboot_message, this.reset.bind(this));
   };
 
   Terminal.prototype.reset = function () {

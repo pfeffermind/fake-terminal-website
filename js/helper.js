@@ -1,9 +1,4 @@
 function sendRoomEvent(roomEvent) {
-  console.log(roomEvent);
-  var hitnpadIp = "";
-
-  // wrongAnswerImg.visible = true;
-
   var data = JSON.stringify( {"data":{"content": roomEvent, "origin":"MyEscapeRoomDevice"}} );
   var xhr  = new XMLHttpRequest();
 
@@ -17,5 +12,9 @@ function restartGame(){
 }
 
 async function sleep(msec) {
-    return new Promise(resolve => setTimeout(resolve, msec));
+  return new Promise(resolve => setTimeout(resolve, msec));
 }
+
+function preventTab(e){
+  setTimeout(function () { document.getElementById("cmdline").focus(); }, 20);
+};
