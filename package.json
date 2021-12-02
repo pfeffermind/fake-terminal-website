@@ -1,0 +1,10 @@
+{
+  "name": "Kernkonzept",
+  "version": "1.0.0",
+  "description": "js app",
+  "main": "main.js",
+  "homepage": "https://github.com/pfeffermind/",
+  "dependencies": {
+    "faye": "^1.4.0"
+  }
+}
