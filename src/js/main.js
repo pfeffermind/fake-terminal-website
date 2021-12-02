@@ -8,10 +8,6 @@ var faye_client = new Faye.Client('http://127.0.0.1:8888/faye');
 
 var faye_message_subscription = faye_client.subscribe('/hintpad', function(message){
 
-  if(message.action == "cardAccepted"){
-    game.scene.getScene('Scene4').cardAccepted();
-  }
-
   if(message.action == "restartGame"){
     restartGame();
   }
@@ -186,7 +182,6 @@ var main = (function () {
     await sleep(1100);
 
     while(percentage <= 10){
-      console.log(bruteText);
       var bruteText = "[";
       for(var i = 1; i <= 10; i++){
         if(i <= percentage){
@@ -196,7 +191,6 @@ var main = (function () {
         }
       }
       bruteText += "] " + percentage + "0% \n";
-      console.log(bruteText);
 
       this.type(bruteText);
       if(percentage < 10){
